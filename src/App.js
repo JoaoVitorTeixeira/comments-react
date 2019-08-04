@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import Comments from './Comments';
-import NewComment from './NewComment';
+import React, { Component } from 'react'
+import Comments from './Comments'
+import NewComment from './NewComment'
 
 class App extends Component {
   state = {
@@ -35,8 +35,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        { /* NewComment*/}
+      <div>
         <NewComment sendComment={this.sendComment} />
         <Comments comments={this.state.comments} />
         {
