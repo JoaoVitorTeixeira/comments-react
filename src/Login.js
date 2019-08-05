@@ -18,9 +18,9 @@ class Login extends Component {
 
     render() {
         const errorMessages = {
-            'auth/wrong-password': 'E-mail e/ou senha inválidos',
-            'auth/user-not-found': 'Usuário não encontrado',
-            'auth/invalid-email': 'E-mail inválido'
+            'auth/wrong-password': 'E-mail e/ou senha inválidos.',
+            'auth/user-not-found': 'Usuário não encontrado.',
+            'auth/invalid-email': 'E-mail inválido.'
         }
 
         return (
@@ -29,9 +29,15 @@ class Login extends Component {
                 <input type='text' onChange={this.handleChande('email')} placeholder='email' />
                 <input type='password' onChange={this.handleChande('passwd')} placeholder='senha' />
                 <button type='button' onClick={this.login}>Entrar</button>
-                <p>
-                    <b>Erro: </b>{this.props.isAuthError && errorMessages[this.props.authError]}
-                </p>
+                <button onClick={() => this.props.changeScreen('signUp')}>
+                    Criar conta
+                </button>
+                {
+                    this.props.isAuthError &&
+                    <p>
+                        <b>Erro: </b>{this.props.isAuthError && errorMessages[this.props.authError]}
+                    </p>
+                }
             </div>
         )
     }

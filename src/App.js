@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Comments from './Comments'
 import NewComment from './NewComment'
 import Login from './Login'
+import SignUp from './SignUp'
 import User from './User'
 
 class App extends Component {
@@ -10,8 +11,11 @@ class App extends Component {
     isLoading: false,
     isAuth: false,
     authError: '',
-    isAuthError: '',
-    user: {}
+    isAuthError: false,
+    isSignUpError: false,
+    signUpError: '',
+    user: {},
+    userScreen: 'login'
   }
 
   sendComment = comment => {
@@ -34,6 +38,7 @@ class App extends Component {
       authError: '',
       isAuthError: false
     })
+
     try {
       await auth.signInWithEmailAndPassword(email, passwd)
     } catch (err) {
@@ -41,6 +46,24 @@ class App extends Component {
         authError: err.code,
         isAuthError: true
       })
+    }
+  }
+
+  createAccount = async (email, passwd) => {
+    const { auth } = this.props
+    this.setState({
+      signupError: '',
+      isSignUpError: false
+    })
+
+    try {
+      await auth.createUserWithEmailAndPassword(email, passwd)
+    } catch (err) {
+      this.setState({
+        signUpError: err.code,
+        isSignUpError: true
+      })
+      console.log(err.code)
     }
   }
 
@@ -76,12 +99,24 @@ class App extends Component {
     auth.signOut()
   }
 
+  changeScreen = (screen) => {
+    this.setState({
+      userScreen: screen
+    })
+  }
+
   render() {
     return (
       <div>
         {this.state.isAuth && <User email={this.state.user.email} logout={this.logout} />}
-        {!this.state.isAuth && <Login login={this.login} isAuthError={this.state.isAuthError}
-          authError={this.state.authError} />}
+        {!this.state.isAuth
+          && this.state.userScreen === 'login' &&
+          <Login login={this.login} isAuthError={this.state.isAuthError}
+            authError={this.state.authError} changeScreen={this.changeScreen} />}
+        {!this.state.isAuth
+          && this.state.userScreen === 'signUp' &&
+          <SignUp creatAccount={this.createAccount} isSignUpError={this.state.isSignUpError}
+            signUpError={this.state.signUpError} changeScreen={this.changeScreen} />}
         {this.state.isAuth && <NewComment sendComment={this.sendComment} />}
         <Comments comments={this.state.comments} />
         {
