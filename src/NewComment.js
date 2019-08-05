@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 class NewComment extends Component {
     state = {
@@ -21,8 +22,12 @@ class NewComment extends Component {
     render() {
         return (
             <div>
-                <textarea value={this.state.newComment} onChange={this.handleChange}></textarea>
-                <button onClick={this.sendComment}>Enviar</button>
+                <InputGroup value={this.state.newComment} onChange={this.handleChange}>
+                    <FormControl placeholder="Digite seu comentário..." as="textarea" aria-label="With textarea" />
+                    <Button onClick={this.sendComment} className='ml-1'>
+                        <InputGroup.Prepend>Enviar</InputGroup.Prepend>
+                    </Button>
+                </InputGroup>
             </div>
         );
     }
