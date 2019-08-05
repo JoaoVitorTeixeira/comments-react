@@ -29,7 +29,7 @@ class SignUp extends Component {
                 <form className='form-inline'>
                     <input type='text' className='form-control mr-1' onChange={this.handleChande('email')} placeholder='email' />
                     <input type='password' className='form-control mr1' onChange={this.handleChande('passwd')} placeholder='senha' />
-                    <button type='button' className='btn btn-primary mr1' onClick={this.creatAccount}>Criar Conta</button>
+                    <button type='button' className='btn btn-primary mr-1 ml-1' onClick={this.creatAccount}>Criar Conta</button>
                     <button className='btn' onClick={() => this.props.changeScreen('login')}> Já tenho uma conta, entrar! </button>
                 </form>
                 {
