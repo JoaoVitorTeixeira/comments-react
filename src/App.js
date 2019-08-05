@@ -72,15 +72,16 @@ class App extends Component {
   }
 
   logout = () => {
-    const {auth} = this.props
+    const { auth } = this.props
     auth.signOut()
   }
 
   render() {
     return (
       <div>
-        {this.state.isAuth && <User email={this.state.user.email} logout = {this.logout}/>}
-        {!this.state.isAuth && <Login login={this.login} />}
+        {this.state.isAuth && <User email={this.state.user.email} logout={this.logout} />}
+        {!this.state.isAuth && <Login login={this.login} isAuthError={this.state.isAuthError}
+          authError={this.state.authError} />}
         {this.state.isAuth && <NewComment sendComment={this.sendComment} />}
         <Comments comments={this.state.comments} />
         {
