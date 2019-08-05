@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Comments from './Comments'
 import NewComment from './NewComment'
 import Login from './Login'
+import User from './User'
 
 class App extends Component {
   state = {
@@ -10,6 +11,7 @@ class App extends Component {
     isAuth: false,
     authError: '',
     isAuthError: '',
+    user: {}
   }
 
   sendComment = comment => {
@@ -18,7 +20,9 @@ class App extends Component {
     const id = database.ref().child('comments').push().key
     const comments = {}
     comments['comments/' + id] = {
-      comment
+      comment,
+      email: this.state.user.email,
+      userId: this.state.user.uid
     }
 
     database.ref().update(comments)
@@ -58,13 +62,24 @@ class App extends Component {
           isAuth: true,
           user
         })
+      } else {
+        this.setState({
+          isAuth: false,
+          user: {}
+        })
       }
     })
+  }
+
+  logout = () => {
+    const {auth} = this.props
+    auth.signOut()
   }
 
   render() {
     return (
       <div>
+        {this.state.isAuth && <User email={this.state.user.email} logout = {this.logout}/>}
         {!this.state.isAuth && <Login login={this.login} />}
         {this.state.isAuth && <NewComment sendComment={this.sendComment} />}
         <Comments comments={this.state.comments} />
