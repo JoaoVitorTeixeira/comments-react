@@ -30,7 +30,6 @@ class NewComment extends Component {
                         <InputGroup.Prepend>Enviar</InputGroup.Prepend>
                     </Button>
                 </InputGroup>
-                {JSON.stringify(this.state.newComment)}
             </div>
         );
     }
